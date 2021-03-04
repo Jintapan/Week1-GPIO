@@ -91,17 +91,21 @@ int main(void) {
 	GPIO_PinState SWstate[2]; //--------------------
 	uint16_t LEDtime = 500; //1hz ------------------
 	uint32_t Timestamp = 0;
+	uint32_t TTimestamp = 0;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		SWstate[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
-		if (SWstate[1] == GPIO_PIN_SET && SWstate[0] == GPIO_PIN_RESET) {
-			if (LEDtime == 500) {
-				LEDtime = 250;
-			} else {
-				LEDtime = 500;
+		if (HAL_GetTick() - Timestamp >= 100) {
+			TTimestamp = HAL_GetTick();
+			SWstate[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
+			if (SWstate[1] == GPIO_PIN_SET && SWstate[0] == GPIO_PIN_RESET) {
+				if (LEDtime == 500) {
+					LEDtime = 250;
+				} else {
+					LEDtime = 500;
+				}
 			}
 		}
 		SWstate[1] = SWstate[0];
@@ -113,6 +117,7 @@ int main(void) {
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
 			}
 		}
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */

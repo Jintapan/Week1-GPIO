@@ -408,7 +408,7 @@ int main(void) {
  8000502:	68bb      	ldr	r3, [r7, #8]
  8000504:	1ad3      	subs	r3, r2, r3
  8000506:	2b63      	cmp	r3, #99	; 0x63
- 8000508:	d9f8      	bls.n	80004fc <main+0x24>
+ 8000508:	d919      	bls.n	800053e <main+0x66>
 			TTimestamp = HAL_GetTick();
  800050a:	f000 fa93 	bl	8000a34 <HAL_GetTick>
  800050e:	6078      	str	r0, [r7, #4]
@@ -439,10 +439,11 @@ int main(void) {
  800053c:	81fb      	strh	r3, [r7, #14]
 				}
 			}
-			SWstate[1] = SWstate[0];
+		}
+		SWstate[1] = SWstate[0];
  800053e:	783b      	ldrb	r3, [r7, #0]
  8000540:	707b      	strb	r3, [r7, #1]
-			if (HAL_GetTick() - Timestamp >= LEDtime) {
+		if (HAL_GetTick() - Timestamp >= LEDtime) {
  8000542:	f000 fa77 	bl	8000a34 <HAL_GetTick>
  8000546:	4602      	mov	r2, r0
  8000548:	68bb      	ldr	r3, [r7, #8]
@@ -450,24 +451,24 @@ int main(void) {
  800054c:	89fb      	ldrh	r3, [r7, #14]
  800054e:	429a      	cmp	r2, r3
  8000550:	d3d4      	bcc.n	80004fc <main+0x24>
-				Timestamp = HAL_GetTick();
+			Timestamp = HAL_GetTick();
  8000552:	f000 fa6f 	bl	8000a34 <HAL_GetTick>
  8000556:	60b8      	str	r0, [r7, #8]
-				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET) {
+			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET) {
  8000558:	f44f 7100 	mov.w	r1, #512	; 0x200
  800055c:	4809      	ldr	r0, [pc, #36]	; (8000584 <main+0xac>)
  800055e:	f000 fcdd 	bl	8000f1c <HAL_GPIO_ReadPin>
  8000562:	4603      	mov	r3, r0
  8000564:	2b01      	cmp	r3, #1
  8000566:	d106      	bne.n	8000576 <main+0x9e>
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
  8000568:	2200      	movs	r2, #0
  800056a:	f44f 7100 	mov.w	r1, #512	; 0x200
  800056e:	4805      	ldr	r0, [pc, #20]	; (8000584 <main+0xac>)
  8000570:	f000 fcec 	bl	8000f4c <HAL_GPIO_WritePin>
  8000574:	e7c2      	b.n	80004fc <main+0x24>
-				} else {
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+			} else {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
  8000576:	2201      	movs	r2, #1
  8000578:	f44f 7100 	mov.w	r1, #512	; 0x200
  800057c:	4801      	ldr	r0, [pc, #4]	; (8000584 <main+0xac>)

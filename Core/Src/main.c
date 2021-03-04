@@ -89,6 +89,7 @@ int main(void) {
 	MX_USART2_UART_Init();
 	/* USER CODE BEGIN 2 */
 	GPIO_PinState SWstate[2]; //--------------------
+	uint8_t SW = 0;
 	uint16_t LEDtime = 500; //1hz ------------------
 	uint32_t Timestamp = 0;
 	uint32_t TTimestamp = 0;
@@ -101,10 +102,15 @@ int main(void) {
 			TTimestamp = HAL_GetTick();
 			SWstate[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
 			if (SWstate[1] == GPIO_PIN_SET && SWstate[0] == GPIO_PIN_RESET) {
-				if (LEDtime == 500) {
-					LEDtime = 250;
-				} else {
+				SW += 1;
+				if (SW == 0 || SW == 4) {
+					LEDtime = 1000;
+				} else if (SW == 1) {
 					LEDtime = 500;
+				} else if (SW == 2) {
+					LEDtime = 250;
+				} else if (SW == 3) {
+					LEDtime = 125;
 				}
 			}
 		}

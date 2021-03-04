@@ -429,8 +429,8 @@ int main(void) {
  800052a:	89fb      	ldrh	r3, [r7, #14]
  800052c:	f5b3 7ffa 	cmp.w	r3, #500	; 0x1f4
  8000530:	d102      	bne.n	8000538 <main+0x60>
-					LEDtime = 250;
- 8000532:	23fa      	movs	r3, #250	; 0xfa
+					LEDtime = 100;
+ 8000532:	2364      	movs	r3, #100	; 0x64
  8000534:	81fb      	strh	r3, [r7, #14]
  8000536:	e002      	b.n	800053e <main+0x66>
 				} else {
